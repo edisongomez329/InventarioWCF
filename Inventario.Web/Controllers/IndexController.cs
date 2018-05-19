@@ -16,7 +16,6 @@ namespace Inventario.Web.Controllers
             _productosImpl = new ProductosImpl();
         }
 
-        // GET: Index
         [HttpGet]
         public ActionResult Index()
         {
