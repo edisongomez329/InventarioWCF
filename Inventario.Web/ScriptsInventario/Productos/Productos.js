@@ -1,5 +1,5 @@
 ﻿//Para uso de DataContract y de DataMember
-//using System.Runtime.Serialization;
+//using System.Runtime.Serialization
 
 var url = $("#URL").val();
 $(document).ready(function () {    
