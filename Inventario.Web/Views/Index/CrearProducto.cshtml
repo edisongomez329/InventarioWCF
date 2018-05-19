@@ -1,0 +1,33 @@
+﻿@model Inventario.Models.ProductosModel
+@{
+    ViewBag.Title = "CrearProducto";
+    
+}
+
+<h2>CrearProducto</h2>
+
+@ViewBag.error
+
+<div class="row">    
+    <section class="col-xs-6 col-md-push-3">
+
+        <div class="alert alert-info hidden">Producto guardado correctamente. </div>
+
+        <form autocomplete="off" id="formProductos" method="post" class="form-group">
+            @Html.HiddenFor(model => model.Id)
+            
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @required = "required" })
+            
+            @Html.LabelFor(model => model.Stock)
+            @Html.TextBoxFor(model => model.Stock, new { @class = "form-control", @required = "required" })
+            
+            @Html.LabelFor(model => model.Costo)
+            @Html.TextBoxFor(model => model.Costo, new { @class = "form-control", @required = "required" })
+                        
+        </form>
+        <br />
+        <button class="btn btn-default" onclick="crearProducto()">Guardar</button>
+    </section>
+</div>
+

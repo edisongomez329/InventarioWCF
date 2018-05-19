@@ -1,0 +1,993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="InventarioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbPruebaBackEnd.dbo.logTblClientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="logTblClientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="generoID" />
+            <PropertyRef Name="cedulaCliente" />
+            <PropertyRef Name="nombresCliente" />
+            <PropertyRef Name="apellidosCliente" />
+            <PropertyRef Name="nicknameCliente" />
+            <PropertyRef Name="createdAt" />
+            <PropertyRef Name="updatedAt" />
+          </Key>
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="generoID" Type="int" Nullable="false" />
+          <Property Name="cedulaCliente" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nombresCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidosCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nicknameCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="updatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERSONAL_JEFES">
+          <Key>
+            <PropertyRef Name="EMPLEADO" />
+          </Key>
+          <Property Name="EMPLEADO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="TARIFA_POR_HORA" Type="money" />
+          <Property Name="JEFE" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblCategoriasProductos">
+          <Key>
+            <PropertyRef Name="categoriaID" />
+          </Key>
+          <Property Name="categoriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCategoria" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblClientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+          </Key>
+          <Property Name="clienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="generoID" Type="int" Nullable="false" />
+          <Property Name="cedulaCliente" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nombresCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidosCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nicknameCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="updatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblConceptoIngresosEgresos">
+          <Key>
+            <PropertyRef Name="conceptoID" />
+          </Key>
+          <Property Name="conceptoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipoRegistroID" Type="int" Nullable="false" />
+          <Property Name="descTipoConcepto" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblGeneros">
+          <Key>
+            <PropertyRef Name="generoID" />
+          </Key>
+          <Property Name="generoID" Type="int" Nullable="false" />
+          <Property Name="nombreGenero" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblIngresosEgresos">
+          <Key>
+            <PropertyRef Name="ingresoEgresoID" />
+          </Key>
+          <Property Name="ingresoEgresoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="conceptoID" Type="int" Nullable="false" />
+          <Property Name="montoIngresoEgreso" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fechaIngresoEgreso" Type="date" Nullable="false" />
+          <Property Name="createdAt" Type="datetime" Nullable="false" />
+          <Property Name="updatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblNivelesEstudios">
+          <Key>
+            <PropertyRef Name="nivelEstudioID" />
+          </Key>
+          <Property Name="nivelEstudioID" Type="int" Nullable="false" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="nombreNivel" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPedidosCliente">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+          </Key>
+          <Property Name="pedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="productoID" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="direccionEnvio" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="fechaActualizacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProductos">
+          <Key>
+            <PropertyRef Name="productoID" />
+          </Key>
+          <Property Name="productoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="categoriaID" Type="int" Nullable="false" />
+          <Property Name="nomProducto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="costoProducto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="stockProducto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTiposRegistro">
+          <Key>
+            <PropertyRef Name="tipoRegistroID" />
+          </Key>
+          <Property Name="tipoRegistroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripTipoRegistro" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUsuariosIngresosEgresos">
+          <Key>
+            <PropertyRef Name="usuariosIngresosEgresosID" />
+          </Key>
+          <Property Name="usuariosIngresosEgresosID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="ingresoEgresoID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dbPruebaBackEnd.dbo.vRegistrosFinancieros' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vRegistrosFinancieros">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="cedulaCliente" />
+            <PropertyRef Name="nombresCliente" />
+            <PropertyRef Name="apellidosCliente" />
+            <PropertyRef Name="montoIngresoEgreso" />
+            <PropertyRef Name="fechaIngresoEgreso" />
+            <PropertyRef Name="conceptoID" />
+            <PropertyRef Name="descTipoConcepto" />
+            <PropertyRef Name="tipoRegistroID" />
+            <PropertyRef Name="descripTipoRegistro" />
+          </Key>
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="cedulaCliente" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nombresCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidosCliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="montoIngresoEgreso" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fechaIngresoEgreso" Type="date" Nullable="false" />
+          <Property Name="conceptoID" Type="int" Nullable="false" />
+          <Property Name="descTipoConcepto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipoRegistroID" Type="int" Nullable="false" />
+          <Property Name="descripTipoRegistro" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblClientes_tblGeneros">
+          <End Role="tblGeneros" Type="Self.tblGeneros" Multiplicity="1" />
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGeneros">
+              <PropertyRef Name="generoID" />
+            </Principal>
+            <Dependent Role="tblClientes">
+              <PropertyRef Name="generoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblConceptoIngresosEgresos_tblTiposRegistro">
+          <End Role="tblTiposRegistro" Type="Self.tblTiposRegistro" Multiplicity="1" />
+          <End Role="tblConceptoIngresosEgresos" Type="Self.tblConceptoIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTiposRegistro">
+              <PropertyRef Name="tipoRegistroID" />
+            </Principal>
+            <Dependent Role="tblConceptoIngresosEgresos">
+              <PropertyRef Name="tipoRegistroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblIngresosEgresos_tblConceptoIngresosEgresos">
+          <End Role="tblConceptoIngresosEgresos" Type="Self.tblConceptoIngresosEgresos" Multiplicity="1" />
+          <End Role="tblIngresosEgresos" Type="Self.tblIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblConceptoIngresosEgresos">
+              <PropertyRef Name="conceptoID" />
+            </Principal>
+            <Dependent Role="tblIngresosEgresos">
+              <PropertyRef Name="conceptoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblNivelesEstudios_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblNivelesEstudios" Type="Self.tblNivelesEstudios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblNivelesEstudios">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPedidosCliente_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblPedidosCliente" Type="Self.tblPedidosCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblPedidosCliente">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPedidosCliente_tblProductos">
+          <End Role="tblProductos" Type="Self.tblProductos" Multiplicity="1" />
+          <End Role="tblPedidosCliente" Type="Self.tblPedidosCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductos">
+              <PropertyRef Name="productoID" />
+            </Principal>
+            <Dependent Role="tblPedidosCliente">
+              <PropertyRef Name="productoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProductos_tblCategoriasProductos">
+          <End Role="tblCategoriasProductos" Type="Self.tblCategoriasProductos" Multiplicity="1" />
+          <End Role="tblProductos" Type="Self.tblProductos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategoriasProductos">
+              <PropertyRef Name="categoriaID" />
+            </Principal>
+            <Dependent Role="tblProductos">
+              <PropertyRef Name="categoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUsuariosIngresosEgresos_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblUsuariosIngresosEgresos" Type="Self.tblUsuariosIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblUsuariosIngresosEgresos">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUsuariosIngresosEgresos_tblIngresosEgresos">
+          <End Role="tblIngresosEgresos" Type="Self.tblIngresosEgresos" Multiplicity="1" />
+          <End Role="tblUsuariosIngresosEgresos" Type="Self.tblUsuariosIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblIngresosEgresos">
+              <PropertyRef Name="ingresoEgresoID" />
+            </Principal>
+            <Dependent Role="tblUsuariosIngresosEgresos">
+              <PropertyRef Name="ingresoEgresoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="PERSONAL_TREE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JEFE" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="EMPLEADO" Type="int" />
+                <Property Name="JEFE" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="InventarioModelStoreContainer">
+          <EntitySet Name="PERSONAL_JEFES" EntityType="Self.PERSONAL_JEFES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategoriasProductos" EntityType="Self.tblCategoriasProductos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblClientes" EntityType="Self.tblClientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblConceptoIngresosEgresos" EntityType="Self.tblConceptoIngresosEgresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGeneros" EntityType="Self.tblGeneros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblIngresosEgresos" EntityType="Self.tblIngresosEgresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblNivelesEstudios" EntityType="Self.tblNivelesEstudios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPedidosCliente" EntityType="Self.tblPedidosCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProductos" EntityType="Self.tblProductos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTiposRegistro" EntityType="Self.tblTiposRegistro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsuariosIngresosEgresos" EntityType="Self.tblUsuariosIngresosEgresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="logTblClientes" EntityType="Self.logTblClientes" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [logTblClientes].[clienteID] AS [clienteID], 
+    [logTblClientes].[generoID] AS [generoID], 
+    [logTblClientes].[cedulaCliente] AS [cedulaCliente], 
+    [logTblClientes].[nombresCliente] AS [nombresCliente], 
+    [logTblClientes].[apellidosCliente] AS [apellidosCliente], 
+    [logTblClientes].[nicknameCliente] AS [nicknameCliente], 
+    [logTblClientes].[createdAt] AS [createdAt], 
+    [logTblClientes].[updatedAt] AS [updatedAt]
+    FROM [dbo].[logTblClientes] AS [logTblClientes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vRegistrosFinancieros" EntityType="Self.vRegistrosFinancieros" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vRegistrosFinancieros].[clienteID] AS [clienteID], 
+    [vRegistrosFinancieros].[cedulaCliente] AS [cedulaCliente], 
+    [vRegistrosFinancieros].[nombresCliente] AS [nombresCliente], 
+    [vRegistrosFinancieros].[apellidosCliente] AS [apellidosCliente], 
+    [vRegistrosFinancieros].[montoIngresoEgreso] AS [montoIngresoEgreso], 
+    [vRegistrosFinancieros].[fechaIngresoEgreso] AS [fechaIngresoEgreso], 
+    [vRegistrosFinancieros].[conceptoID] AS [conceptoID], 
+    [vRegistrosFinancieros].[descTipoConcepto] AS [descTipoConcepto], 
+    [vRegistrosFinancieros].[tipoRegistroID] AS [tipoRegistroID], 
+    [vRegistrosFinancieros].[descripTipoRegistro] AS [descripTipoRegistro]
+    FROM [dbo].[vRegistrosFinancieros] AS [vRegistrosFinancieros]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblClientes_tblGeneros" Association="Self.FK_tblClientes_tblGeneros">
+            <End Role="tblGeneros" EntitySet="tblGeneros" />
+            <End Role="tblClientes" EntitySet="tblClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblConceptoIngresosEgresos_tblTiposRegistro" Association="Self.FK_tblConceptoIngresosEgresos_tblTiposRegistro">
+            <End Role="tblTiposRegistro" EntitySet="tblTiposRegistro" />
+            <End Role="tblConceptoIngresosEgresos" EntitySet="tblConceptoIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblIngresosEgresos_tblConceptoIngresosEgresos" Association="Self.FK_tblIngresosEgresos_tblConceptoIngresosEgresos">
+            <End Role="tblConceptoIngresosEgresos" EntitySet="tblConceptoIngresosEgresos" />
+            <End Role="tblIngresosEgresos" EntitySet="tblIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblNivelesEstudios_tblClientes" Association="Self.FK_tblNivelesEstudios_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblNivelesEstudios" EntitySet="tblNivelesEstudios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPedidosCliente_tblClientes" Association="Self.FK_tblPedidosCliente_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblPedidosCliente" EntitySet="tblPedidosCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPedidosCliente_tblProductos" Association="Self.FK_tblPedidosCliente_tblProductos">
+            <End Role="tblProductos" EntitySet="tblProductos" />
+            <End Role="tblPedidosCliente" EntitySet="tblPedidosCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProductos_tblCategoriasProductos" Association="Self.FK_tblProductos_tblCategoriasProductos">
+            <End Role="tblCategoriasProductos" EntitySet="tblCategoriasProductos" />
+            <End Role="tblProductos" EntitySet="tblProductos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUsuariosIngresosEgresos_tblClientes" Association="Self.FK_tblUsuariosIngresosEgresos_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblUsuariosIngresosEgresos" EntitySet="tblUsuariosIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUsuariosIngresosEgresos_tblIngresosEgresos" Association="Self.FK_tblUsuariosIngresosEgresos_tblIngresosEgresos">
+            <End Role="tblIngresosEgresos" EntitySet="tblIngresosEgresos" />
+            <End Role="tblUsuariosIngresosEgresos" EntitySet="tblUsuariosIngresosEgresos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventarioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="PERSONAL_TREE_Result">
+          <Property Name="EMPLEADO" Type="Int32" />
+          <Property Name="JEFE" Type="Int32" />
+        </ComplexType>
+        <EntityType Name="PERSONAL_JEFES">
+          <Key>
+            <PropertyRef Name="EMPLEADO" />
+          </Key>
+          <Property Name="EMPLEADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TARIFA_POR_HORA" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="JEFE" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblCategoriasProductos">
+          <Key>
+            <PropertyRef Name="categoriaID" />
+          </Key>
+          <Property Name="categoriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblProductos" Relationship="Self.FK_tblProductos_tblCategoriasProductos" FromRole="tblCategoriasProductos" ToRole="tblProductos" />
+        </EntityType>
+        <EntityType Name="tblClientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+          </Key>
+          <Property Name="clienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="generoID" Type="Int32" Nullable="false" />
+          <Property Name="cedulaCliente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombresCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidosCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nicknameCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblGeneros" Relationship="Self.FK_tblClientes_tblGeneros" FromRole="tblClientes" ToRole="tblGeneros" />
+          <NavigationProperty Name="tblNivelesEstudios" Relationship="Self.FK_tblNivelesEstudios_tblClientes" FromRole="tblClientes" ToRole="tblNivelesEstudios" />
+          <NavigationProperty Name="tblPedidosCliente" Relationship="Self.FK_tblPedidosCliente_tblClientes" FromRole="tblClientes" ToRole="tblPedidosCliente" />
+          <NavigationProperty Name="tblUsuariosIngresosEgresos" Relationship="Self.FK_tblUsuariosIngresosEgresos_tblClientes" FromRole="tblClientes" ToRole="tblUsuariosIngresosEgresos" />
+        </EntityType>
+        <EntityType Name="tblConceptoIngresosEgresos">
+          <Key>
+            <PropertyRef Name="conceptoID" />
+          </Key>
+          <Property Name="conceptoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoRegistroID" Type="Int32" Nullable="false" />
+          <Property Name="descTipoConcepto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblTiposRegistro" Relationship="Self.FK_tblConceptoIngresosEgresos_tblTiposRegistro" FromRole="tblConceptoIngresosEgresos" ToRole="tblTiposRegistro" />
+          <NavigationProperty Name="tblIngresosEgresos" Relationship="Self.FK_tblIngresosEgresos_tblConceptoIngresosEgresos" FromRole="tblConceptoIngresosEgresos" ToRole="tblIngresosEgresos" />
+        </EntityType>
+        <EntityType Name="tblGeneros">
+          <Key>
+            <PropertyRef Name="generoID" />
+          </Key>
+          <Property Name="generoID" Type="Int32" Nullable="false" />
+          <Property Name="nombreGenero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblClientes" Relationship="Self.FK_tblClientes_tblGeneros" FromRole="tblGeneros" ToRole="tblClientes" />
+        </EntityType>
+        <EntityType Name="tblIngresosEgresos">
+          <Key>
+            <PropertyRef Name="ingresoEgresoID" />
+          </Key>
+          <Property Name="ingresoEgresoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="conceptoID" Type="Int32" Nullable="false" />
+          <Property Name="montoIngresoEgreso" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fechaIngresoEgreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblConceptoIngresosEgresos" Relationship="Self.FK_tblIngresosEgresos_tblConceptoIngresosEgresos" FromRole="tblIngresosEgresos" ToRole="tblConceptoIngresosEgresos" />
+          <NavigationProperty Name="tblUsuariosIngresosEgresos" Relationship="Self.FK_tblUsuariosIngresosEgresos_tblIngresosEgresos" FromRole="tblIngresosEgresos" ToRole="tblUsuariosIngresosEgresos" />
+        </EntityType>
+        <EntityType Name="tblNivelesEstudios">
+          <Key>
+            <PropertyRef Name="nivelEstudioID" />
+          </Key>
+          <Property Name="nivelEstudioID" Type="Int32" Nullable="false" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="nombreNivel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblClientes" Relationship="Self.FK_tblNivelesEstudios_tblClientes" FromRole="tblNivelesEstudios" ToRole="tblClientes" />
+        </EntityType>
+        <EntityType Name="tblPedidosCliente">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+          </Key>
+          <Property Name="pedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="productoID" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="direccionEnvio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblClientes" Relationship="Self.FK_tblPedidosCliente_tblClientes" FromRole="tblPedidosCliente" ToRole="tblClientes" />
+          <NavigationProperty Name="tblProductos" Relationship="Self.FK_tblPedidosCliente_tblProductos" FromRole="tblPedidosCliente" ToRole="tblProductos" />
+        </EntityType>
+        <EntityType Name="tblProductos">
+          <Key>
+            <PropertyRef Name="productoID" />
+          </Key>
+          <Property Name="productoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="categoriaID" Type="Int32" Nullable="false" />
+          <Property Name="nomProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="costoProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="stockProducto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblCategoriasProductos" Relationship="Self.FK_tblProductos_tblCategoriasProductos" FromRole="tblProductos" ToRole="tblCategoriasProductos" />
+          <NavigationProperty Name="tblPedidosCliente" Relationship="Self.FK_tblPedidosCliente_tblProductos" FromRole="tblProductos" ToRole="tblPedidosCliente" />
+        </EntityType>
+        <EntityType Name="tblTiposRegistro">
+          <Key>
+            <PropertyRef Name="tipoRegistroID" />
+          </Key>
+          <Property Name="tipoRegistroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripTipoRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblConceptoIngresosEgresos" Relationship="Self.FK_tblConceptoIngresosEgresos_tblTiposRegistro" FromRole="tblTiposRegistro" ToRole="tblConceptoIngresosEgresos" />
+        </EntityType>
+        <EntityType Name="tblUsuariosIngresosEgresos">
+          <Key>
+            <PropertyRef Name="usuariosIngresosEgresosID" />
+          </Key>
+          <Property Name="usuariosIngresosEgresosID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="ingresoEgresoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblClientes" Relationship="Self.FK_tblUsuariosIngresosEgresos_tblClientes" FromRole="tblUsuariosIngresosEgresos" ToRole="tblClientes" />
+          <NavigationProperty Name="tblIngresosEgresos" Relationship="Self.FK_tblUsuariosIngresosEgresos_tblIngresosEgresos" FromRole="tblUsuariosIngresosEgresos" ToRole="tblIngresosEgresos" />
+        </EntityType>
+        <EntityType Name="logTblClientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="generoID" />
+            <PropertyRef Name="cedulaCliente" />
+            <PropertyRef Name="nombresCliente" />
+            <PropertyRef Name="apellidosCliente" />
+            <PropertyRef Name="nicknameCliente" />
+            <PropertyRef Name="createdAt" />
+            <PropertyRef Name="updatedAt" />
+          </Key>
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="generoID" Type="Int32" Nullable="false" />
+          <Property Name="cedulaCliente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombresCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidosCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nicknameCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vRegistrosFinancieros">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="cedulaCliente" />
+            <PropertyRef Name="nombresCliente" />
+            <PropertyRef Name="apellidosCliente" />
+            <PropertyRef Name="montoIngresoEgreso" />
+            <PropertyRef Name="fechaIngresoEgreso" />
+            <PropertyRef Name="conceptoID" />
+            <PropertyRef Name="descTipoConcepto" />
+            <PropertyRef Name="tipoRegistroID" />
+            <PropertyRef Name="descripTipoRegistro" />
+          </Key>
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="cedulaCliente" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombresCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidosCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="montoIngresoEgreso" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="fechaIngresoEgreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="conceptoID" Type="Int32" Nullable="false" />
+          <Property Name="descTipoConcepto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoRegistroID" Type="Int32" Nullable="false" />
+          <Property Name="descripTipoRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblProductos_tblCategoriasProductos">
+          <End Role="tblCategoriasProductos" Type="Self.tblCategoriasProductos" Multiplicity="1" />
+          <End Role="tblProductos" Type="Self.tblProductos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategoriasProductos">
+              <PropertyRef Name="categoriaID" />
+            </Principal>
+            <Dependent Role="tblProductos">
+              <PropertyRef Name="categoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblClientes_tblGeneros">
+          <End Role="tblGeneros" Type="Self.tblGeneros" Multiplicity="1" />
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGeneros">
+              <PropertyRef Name="generoID" />
+            </Principal>
+            <Dependent Role="tblClientes">
+              <PropertyRef Name="generoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblNivelesEstudios_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblNivelesEstudios" Type="Self.tblNivelesEstudios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblNivelesEstudios">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPedidosCliente_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblPedidosCliente" Type="Self.tblPedidosCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblPedidosCliente">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUsuariosIngresosEgresos_tblClientes">
+          <End Role="tblClientes" Type="Self.tblClientes" Multiplicity="1" />
+          <End Role="tblUsuariosIngresosEgresos" Type="Self.tblUsuariosIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblClientes">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="tblUsuariosIngresosEgresos">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblConceptoIngresosEgresos_tblTiposRegistro">
+          <End Role="tblTiposRegistro" Type="Self.tblTiposRegistro" Multiplicity="1" />
+          <End Role="tblConceptoIngresosEgresos" Type="Self.tblConceptoIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTiposRegistro">
+              <PropertyRef Name="tipoRegistroID" />
+            </Principal>
+            <Dependent Role="tblConceptoIngresosEgresos">
+              <PropertyRef Name="tipoRegistroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblIngresosEgresos_tblConceptoIngresosEgresos">
+          <End Role="tblConceptoIngresosEgresos" Type="Self.tblConceptoIngresosEgresos" Multiplicity="1" />
+          <End Role="tblIngresosEgresos" Type="Self.tblIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblConceptoIngresosEgresos">
+              <PropertyRef Name="conceptoID" />
+            </Principal>
+            <Dependent Role="tblIngresosEgresos">
+              <PropertyRef Name="conceptoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUsuariosIngresosEgresos_tblIngresosEgresos">
+          <End Role="tblIngresosEgresos" Type="Self.tblIngresosEgresos" Multiplicity="1" />
+          <End Role="tblUsuariosIngresosEgresos" Type="Self.tblUsuariosIngresosEgresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblIngresosEgresos">
+              <PropertyRef Name="ingresoEgresoID" />
+            </Principal>
+            <Dependent Role="tblUsuariosIngresosEgresos">
+              <PropertyRef Name="ingresoEgresoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPedidosCliente_tblProductos">
+          <End Role="tblProductos" Type="Self.tblProductos" Multiplicity="1" />
+          <End Role="tblPedidosCliente" Type="Self.tblPedidosCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductos">
+              <PropertyRef Name="productoID" />
+            </Principal>
+            <Dependent Role="tblPedidosCliente">
+              <PropertyRef Name="productoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InventarioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PERSONAL_JEFES" EntityType="Self.PERSONAL_JEFES" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tblCategoriasProductos" EntityType="Self.tblCategoriasProductos" />
+          <EntitySet Name="tblClientes" EntityType="Self.tblClientes" />
+          <EntitySet Name="tblConceptoIngresosEgresos" EntityType="Self.tblConceptoIngresosEgresos" />
+          <EntitySet Name="tblGeneros" EntityType="Self.tblGeneros" />
+          <EntitySet Name="tblIngresosEgresos" EntityType="Self.tblIngresosEgresos" />
+          <EntitySet Name="tblNivelesEstudios" EntityType="Self.tblNivelesEstudios" />
+          <EntitySet Name="tblPedidosCliente" EntityType="Self.tblPedidosCliente" />
+          <EntitySet Name="tblProductos" EntityType="Self.tblProductos" />
+          <EntitySet Name="tblTiposRegistro" EntityType="Self.tblTiposRegistro" />
+          <EntitySet Name="tblUsuariosIngresosEgresos" EntityType="Self.tblUsuariosIngresosEgresos" />
+          <EntitySet Name="logTblClientes" EntityType="Self.logTblClientes" />
+          <EntitySet Name="vRegistrosFinancieros" EntityType="Self.vRegistrosFinancieros" />
+          <AssociationSet Name="FK_tblProductos_tblCategoriasProductos" Association="Self.FK_tblProductos_tblCategoriasProductos">
+            <End Role="tblCategoriasProductos" EntitySet="tblCategoriasProductos" />
+            <End Role="tblProductos" EntitySet="tblProductos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblClientes_tblGeneros" Association="Self.FK_tblClientes_tblGeneros">
+            <End Role="tblGeneros" EntitySet="tblGeneros" />
+            <End Role="tblClientes" EntitySet="tblClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblNivelesEstudios_tblClientes" Association="Self.FK_tblNivelesEstudios_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblNivelesEstudios" EntitySet="tblNivelesEstudios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPedidosCliente_tblClientes" Association="Self.FK_tblPedidosCliente_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblPedidosCliente" EntitySet="tblPedidosCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUsuariosIngresosEgresos_tblClientes" Association="Self.FK_tblUsuariosIngresosEgresos_tblClientes">
+            <End Role="tblClientes" EntitySet="tblClientes" />
+            <End Role="tblUsuariosIngresosEgresos" EntitySet="tblUsuariosIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblConceptoIngresosEgresos_tblTiposRegistro" Association="Self.FK_tblConceptoIngresosEgresos_tblTiposRegistro">
+            <End Role="tblTiposRegistro" EntitySet="tblTiposRegistro" />
+            <End Role="tblConceptoIngresosEgresos" EntitySet="tblConceptoIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblIngresosEgresos_tblConceptoIngresosEgresos" Association="Self.FK_tblIngresosEgresos_tblConceptoIngresosEgresos">
+            <End Role="tblConceptoIngresosEgresos" EntitySet="tblConceptoIngresosEgresos" />
+            <End Role="tblIngresosEgresos" EntitySet="tblIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUsuariosIngresosEgresos_tblIngresosEgresos" Association="Self.FK_tblUsuariosIngresosEgresos_tblIngresosEgresos">
+            <End Role="tblIngresosEgresos" EntitySet="tblIngresosEgresos" />
+            <End Role="tblUsuariosIngresosEgresos" EntitySet="tblUsuariosIngresosEgresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPedidosCliente_tblProductos" Association="Self.FK_tblPedidosCliente_tblProductos">
+            <End Role="tblProductos" EntitySet="tblProductos" />
+            <End Role="tblPedidosCliente" EntitySet="tblPedidosCliente" />
+          </AssociationSet>
+          <FunctionImport Name="PERSONAL_TREE" IsComposable="true" ReturnType="Collection(InventarioModel.PERSONAL_TREE_Result)">
+            <Parameter Name="JEFE" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(InventarioModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(InventarioModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InventarioModelStoreContainer" CdmEntityContainer="InventarioEntities">
+          <EntitySetMapping Name="PERSONAL_JEFES">
+            <EntityTypeMapping TypeName="InventarioModel.PERSONAL_JEFES">
+              <MappingFragment StoreEntitySet="PERSONAL_JEFES">
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="TARIFA_POR_HORA" ColumnName="TARIFA_POR_HORA" />
+                <ScalarProperty Name="JEFE" ColumnName="JEFE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InventarioModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCategoriasProductos">
+            <EntityTypeMapping TypeName="InventarioModel.tblCategoriasProductos">
+              <MappingFragment StoreEntitySet="tblCategoriasProductos">
+                <ScalarProperty Name="categoriaID" ColumnName="categoriaID" />
+                <ScalarProperty Name="nombreCategoria" ColumnName="nombreCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblClientes">
+            <EntityTypeMapping TypeName="InventarioModel.tblClientes">
+              <MappingFragment StoreEntitySet="tblClientes">
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="generoID" ColumnName="generoID" />
+                <ScalarProperty Name="cedulaCliente" ColumnName="cedulaCliente" />
+                <ScalarProperty Name="nombresCliente" ColumnName="nombresCliente" />
+                <ScalarProperty Name="apellidosCliente" ColumnName="apellidosCliente" />
+                <ScalarProperty Name="nicknameCliente" ColumnName="nicknameCliente" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="updatedAt" ColumnName="updatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblConceptoIngresosEgresos">
+            <EntityTypeMapping TypeName="InventarioModel.tblConceptoIngresosEgresos">
+              <MappingFragment StoreEntitySet="tblConceptoIngresosEgresos">
+                <ScalarProperty Name="conceptoID" ColumnName="conceptoID" />
+                <ScalarProperty Name="tipoRegistroID" ColumnName="tipoRegistroID" />
+                <ScalarProperty Name="descTipoConcepto" ColumnName="descTipoConcepto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGeneros">
+            <EntityTypeMapping TypeName="InventarioModel.tblGeneros">
+              <MappingFragment StoreEntitySet="tblGeneros">
+                <ScalarProperty Name="generoID" ColumnName="generoID" />
+                <ScalarProperty Name="nombreGenero" ColumnName="nombreGenero" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblIngresosEgresos">
+            <EntityTypeMapping TypeName="InventarioModel.tblIngresosEgresos">
+              <MappingFragment StoreEntitySet="tblIngresosEgresos">
+                <ScalarProperty Name="ingresoEgresoID" ColumnName="ingresoEgresoID" />
+                <ScalarProperty Name="conceptoID" ColumnName="conceptoID" />
+                <ScalarProperty Name="montoIngresoEgreso" ColumnName="montoIngresoEgreso" />
+                <ScalarProperty Name="fechaIngresoEgreso" ColumnName="fechaIngresoEgreso" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="updatedAt" ColumnName="updatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblNivelesEstudios">
+            <EntityTypeMapping TypeName="InventarioModel.tblNivelesEstudios">
+              <MappingFragment StoreEntitySet="tblNivelesEstudios">
+                <ScalarProperty Name="nivelEstudioID" ColumnName="nivelEstudioID" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="nombreNivel" ColumnName="nombreNivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPedidosCliente">
+            <EntityTypeMapping TypeName="InventarioModel.tblPedidosCliente">
+              <MappingFragment StoreEntitySet="tblPedidosCliente">
+                <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="productoID" ColumnName="productoID" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="direccionEnvio" ColumnName="direccionEnvio" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProductos">
+            <EntityTypeMapping TypeName="InventarioModel.tblProductos">
+              <MappingFragment StoreEntitySet="tblProductos">
+                <ScalarProperty Name="productoID" ColumnName="productoID" />
+                <ScalarProperty Name="categoriaID" ColumnName="categoriaID" />
+                <ScalarProperty Name="nomProducto" ColumnName="nomProducto" />
+                <ScalarProperty Name="costoProducto" ColumnName="costoProducto" />
+                <ScalarProperty Name="stockProducto" ColumnName="stockProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTiposRegistro">
+            <EntityTypeMapping TypeName="InventarioModel.tblTiposRegistro">
+              <MappingFragment StoreEntitySet="tblTiposRegistro">
+                <ScalarProperty Name="tipoRegistroID" ColumnName="tipoRegistroID" />
+                <ScalarProperty Name="descripTipoRegistro" ColumnName="descripTipoRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsuariosIngresosEgresos">
+            <EntityTypeMapping TypeName="InventarioModel.tblUsuariosIngresosEgresos">
+              <MappingFragment StoreEntitySet="tblUsuariosIngresosEgresos">
+                <ScalarProperty Name="usuariosIngresosEgresosID" ColumnName="usuariosIngresosEgresosID" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="ingresoEgresoID" ColumnName="ingresoEgresoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logTblClientes">
+            <EntityTypeMapping TypeName="InventarioModel.logTblClientes">
+              <MappingFragment StoreEntitySet="logTblClientes">
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="generoID" ColumnName="generoID" />
+                <ScalarProperty Name="cedulaCliente" ColumnName="cedulaCliente" />
+                <ScalarProperty Name="nombresCliente" ColumnName="nombresCliente" />
+                <ScalarProperty Name="apellidosCliente" ColumnName="apellidosCliente" />
+                <ScalarProperty Name="nicknameCliente" ColumnName="nicknameCliente" />
+                <ScalarProperty Name="createdAt" ColumnName="createdAt" />
+                <ScalarProperty Name="updatedAt" ColumnName="updatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vRegistrosFinancieros">
+            <EntityTypeMapping TypeName="InventarioModel.vRegistrosFinancieros">
+              <MappingFragment StoreEntitySet="vRegistrosFinancieros">
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="cedulaCliente" ColumnName="cedulaCliente" />
+                <ScalarProperty Name="nombresCliente" ColumnName="nombresCliente" />
+                <ScalarProperty Name="apellidosCliente" ColumnName="apellidosCliente" />
+                <ScalarProperty Name="montoIngresoEgreso" ColumnName="montoIngresoEgreso" />
+                <ScalarProperty Name="fechaIngresoEgreso" ColumnName="fechaIngresoEgreso" />
+                <ScalarProperty Name="conceptoID" ColumnName="conceptoID" />
+                <ScalarProperty Name="descTipoConcepto" ColumnName="descTipoConcepto" />
+                <ScalarProperty Name="tipoRegistroID" ColumnName="tipoRegistroID" />
+                <ScalarProperty Name="descripTipoRegistro" ColumnName="descripTipoRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="InventarioModel.Store.PERSONAL_TREE" FunctionImportName="PERSONAL_TREE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.PERSONAL_TREE_Result">
+                <ScalarProperty Name="EMPLEADO" ColumnName="EMPLEADO" />
+                <ScalarProperty Name="JEFE" ColumnName="JEFE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="InventarioModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="InventarioModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="InventarioModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="InventarioModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="InventarioModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="InventarioModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="InventarioModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

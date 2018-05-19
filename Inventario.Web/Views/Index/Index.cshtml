@@ -1,0 +1,30 @@
+﻿@model System.Collections.Generic.List<Inventario.Models.ProductosModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="row">
+    <button type="button" onclick="crearProducto()"></button>
+    <section class="col-xs-6 col-md-push-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Costo</td>
+                    <td>Stock</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.Nombre</td>
+                        <td>@i.Costo</td>
+                        <td>@i.Stock</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</div>
